@@ -14,7 +14,8 @@
 [![static analysis](https://github.com/vjik/yii-validator-symfony-rule/workflows/static%20analysis/badge.svg)](https://github.com/vjik/yii-validator-symfony-rule/actions?query=workflow%3A%22static+analysis%22)
 [![psalm-level](https://shepherd.dev/github/vjik/yii-validator-symfony-rule/level.svg)](https://shepherd.dev/github/vjik/yii-validator-symfony-rule)
 
-The package ...
+The package provides validator rule `SymfonyRule` that allow use Symfony validation constraints in
+[Yii Validator](https://github.com/yiisoft/validator).
 
 ## Requirements
 
