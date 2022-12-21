@@ -26,7 +26,7 @@ final class SymfonyRuleHandler implements RuleHandlerInterface
         $result = new Result();
         foreach ($violations as $violation) {
             $result->addError(
-                message: $violation->getMessage(),
+                message: (string) $violation->getMessage(),
                 valuePath: $this->prepareValuePath($violation->getPropertyPath()),
             );
         }
@@ -34,6 +34,9 @@ final class SymfonyRuleHandler implements RuleHandlerInterface
         return $result;
     }
 
+    /**
+     * @psalm-return list<string>
+     */
     private function prepareValuePath(string $propertyPath): array
     {
         $propertyPath = trim($propertyPath, '[');
