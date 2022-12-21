@@ -31,6 +31,45 @@ composer require vjik/yii-validator-symfony-rule
 
 ## General usage
 
+Wrap a symfony constraints to Yii rule `SymfonyRule` enough. For example:
+
+```php
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Vjik\Yii\ValidatorSymfonyRule\SymfonyRule;
+
+final class PropertyAttribute
+{
+    #[SymfonyRule(new NotBlank())]
+    public string $name = '';
+    
+    #[SymfonyRule([
+        new NotBlank(),
+        new Email(),
+    ])]
+    public string $email = '';
+}
+```
+
+## `SymfonyRule` rule parameters
+
+**$constraint**
+
+Single or array of Symfony validation constraints. Required.
+
+**$skipOnEmpty**
+
+Whether skip rule on empty value or not, and which value consider as empty. Defaults to `null`.
+
+**$skipOnError**
+
+A boolean value where `true` means to skip rule when the previous one errored and `false` — do not skip.
+Defaults to `false`.
+
+**$when**
+
+The closure that allow to apply rule under certain conditions only. Defaults to `null`.
+
 ## Testing
 
 ### Unit testing
