@@ -18,6 +18,28 @@ use Yiisoft\Validator\SkipOnErrorInterface;
 use Yiisoft\Validator\WhenInterface;
 
 /**
+ * Symfony validation constraints wrapper for usage with Yii Validator.
+ *
+ * Usage example:
+ *
+ * ```php
+ * use Symfony\Component\Validator\Constraints\Email;
+ * use Symfony\Component\Validator\Constraints\NotBlank;
+ * use Vjik\Yii\ValidatorSymfonyRule\SymfonyRule;
+ *
+ * final class PropertyAttribute
+ * {
+ *   #[SymfonyRule(new NotBlank())]
+ *   public string $name = '';
+ *
+ *   #[SymfonyRule([
+ *     new NotBlank(),
+ *     new Email(),
+ *   ])]
+ *   public string $email = '';
+ * }
+ * ```
+ *
  * @psalm-import-type WhenType from WhenInterface
  */
 #[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
@@ -43,7 +65,7 @@ final class SymfonyRule implements
     private $skipOnEmpty;
 
     /**
-     * @param Constraint|Constraint[] $constraint
+     * @param Constraint|Constraint[] $constraint Single or array of Symfony validation constraints.
      * @param bool|callable|null $skipOnEmpty Whether skip rule on empty value or not, and which value consider as
      * empty. More details in {@see SkipOnEmptyInterface}.
      * @param bool $skipOnError A boolean value where `true` means to skip rule when the previous one errored
