@@ -21,7 +21,7 @@ final class SymfonyRuleHandler implements RuleHandlerInterface
             throw new UnexpectedRuleException(SymfonyRule::class, $rule);
         }
 
-        $violations = Validation::createValidator()->validate($value, $rule->getConstraint());
+        $violations = Validation::createValidator()->validate($value, $rule->getConstraints());
 
         $result = new Result();
         foreach ($violations as $violation) {
