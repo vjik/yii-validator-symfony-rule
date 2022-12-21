@@ -26,6 +26,44 @@ final class SymfonyRuleTest extends TestCase
 
         $this->assertSame('symfony-rule', $rule->getName());
         $this->assertSame([], $rule->getConstraints());
+        $this->assertNull($rule->getSkipOnEmpty());
+        $this->assertFalse($rule->shouldSkipOnError());
+        $this->assertNull($rule->getWhen());
+    }
+
+    public function dataOptions(): array
+    {
+        return [
+            [
+                [
+                    'skipOnEmpty' => false,
+                    'skipOnError' => false,
+                ],
+                new SymfonyRule([]),
+            ],
+            [
+                [
+                    'skipOnEmpty' => true,
+                    'skipOnError' => false,
+                ],
+                new SymfonyRule([], skipOnEmpty: true),
+            ],
+            [
+                [
+                    'skipOnEmpty' => false,
+                    'skipOnError' => true,
+                ],
+                new SymfonyRule([], skipOnError: true),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataOptions
+     */
+    public function testOptions(array $expected, SymfonyRule $rule): void
+    {
+        $this->assertSame($expected, $rule->getOptions());
     }
 
     public function testBase(): void

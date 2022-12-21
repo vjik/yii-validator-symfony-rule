@@ -4,13 +4,31 @@ declare(strict_types=1);
 
 namespace Vjik\Yii\ValidatorSymfonyRule;
 
+use Closure;
 use InvalidArgumentException;
 use Symfony\Component\Validator\Constraint;
+use Yiisoft\Validator\Rule\Trait\SkipOnEmptyTrait;
+use Yiisoft\Validator\Rule\Trait\SkipOnErrorTrait;
+use Yiisoft\Validator\Rule\Trait\WhenTrait;
 use Yiisoft\Validator\RuleHandlerInterface;
-use Yiisoft\Validator\RuleInterface;
+use Yiisoft\Validator\RuleWithOptionsInterface;
+use Yiisoft\Validator\SkipOnEmptyInterface;
+use Yiisoft\Validator\SkipOnErrorInterface;
+use Yiisoft\Validator\WhenInterface;
 
-final class SymfonyRule implements RuleInterface
+/**
+ * @psalm-import-type WhenType from WhenInterface
+ */
+final class SymfonyRule implements
+    RuleWithOptionsInterface,
+    SkipOnEmptyInterface,
+    SkipOnErrorInterface,
+    WhenInterface
 {
+    use SkipOnEmptyTrait;
+    use SkipOnErrorTrait;
+    use WhenTrait;
+
     /**
      * @var Constraint[]
      * @psalm-var list<Constraint>
@@ -18,11 +36,31 @@ final class SymfonyRule implements RuleInterface
     private array $constraints;
 
     /**
-     * @param Constraint|Constraint[] $constraint
+     * @var bool|callable|null
      */
-    public function __construct(Constraint|array $constraint)
-    {
+    private $skipOnEmpty;
+
+    /**
+     * @param Constraint|Constraint[] $constraint
+     * @param bool|callable|null $skipOnEmpty Whether skip rule on empty value or not, and which value consider as
+     * empty. More details in {@see SkipOnEmptyInterface}.
+     * @param bool $skipOnError A boolean value where `true` means to skip rule when the previous one errored
+     * and `false` - do not skip.
+     * @param Closure|null $when The closure that allow to apply rule under certain conditions only. More details
+     * in {@see SkipOnErrorInterface}.
+     *
+     * @psalm-param WhenType $when
+     *
+     * @throws InvalidArgumentException
+     */
+    public function __construct(
+        Constraint|array $constraint,
+        bool|callable|null $skipOnEmpty = null,
+        private bool $skipOnError = false,
+        private Closure|null $when = null,
+    ) {
         $this->setConstraints($constraint);
+        $this->skipOnEmpty = $skipOnEmpty;
     }
 
     /**
@@ -67,5 +105,13 @@ final class SymfonyRule implements RuleInterface
             }
             $this->constraints[] = $constraint;
         }
+    }
+
+    public function getOptions(): array
+    {
+        return [
+            'skipOnEmpty' => $this->getSkipOnEmptyOption(),
+            'skipOnError' => $this->skipOnError,
+        ];
     }
 }
