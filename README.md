@@ -1,6 +1,6 @@
 <p align="center">
     <img src="https://yiisoft.github.io/docs/images/yii_logo.svg" height="100px">
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &nbsp; &nbsp; &nbsp;
     <img src="symfony-logo.svg" height="100px">
     <h1 align="center">Yii Validator Symfony Rule Adapter</h1>
     <br>
