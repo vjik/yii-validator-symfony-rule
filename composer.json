@@ -1,7 +1,7 @@
 {
     "name": "vjik/yii-validator-symfony-rule",
     "type": "library",
-    "description": "Symfony constraints adapter for Yii Validator",
+    "description": "Symfony validation constraints adapter for Yii Validator",
     "keywords": [
         "yii",
         "validator",
