@@ -1,4 +1,10 @@
-# Yii Validator Symfony Rule Adapter
+<p align="center">
+    <img src="https://yiisoft.github.io/docs/images/yii_logo.svg" height="100px">
+    &nbsp;
+    <img src="symfony-logo.svg" height="100px">
+    <h1 align="center">Yii Validator Symfony Rule Adapter</h1>
+    <br>
+</p>
 
 [![Latest Stable Version](https://poser.pugx.org/vjik/yii-validator-symfony-rule/v/stable.png)](https://packagist.org/packages/vjik/yii-validator-symfony-rule)
 [![Total Downloads](https://poser.pugx.org/vjik/yii-validator-symfony-rule/downloads.png)](https://packagist.org/packages/vjik/yii-validator-symfony-rule)
