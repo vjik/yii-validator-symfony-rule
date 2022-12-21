@@ -1,16 +1,21 @@
 {
     "name": "vjik/yii-validator-symfony-rule",
     "type": "library",
-    "description": "_____",
+    "description": "Symfony constraints adapter for Yii Validator",
     "keywords": [
-        "_____"
+        "yii",
+        "validator",
+        "validation",
+        "symfony",
+        "constraint"
     ],
     "license": "BSD-3-Clause",
     "support": {
         "issues": "https://github.com/vjik/yii-validator-symfony-rule/issues?state=open",
         "source": "https://github.com/vjik/yii-validator-symfony-rule"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^8.0",
         "yiisoft/validator": "3.0.x-dev",
