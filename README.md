@@ -1,4 +1,4 @@
-# _____
+# Yii Validator Symfony Rule Adapter
 
 [![Latest Stable Version](https://poser.pugx.org/vjik/_____/v/stable.png)](https://packagist.org/packages/vjik/_____)
 [![Total Downloads](https://poser.pugx.org/vjik/_____/downloads.png)](https://packagist.org/packages/vjik/_____)
