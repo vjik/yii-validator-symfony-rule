@@ -13,10 +13,21 @@ use Symfony\Component\Validator\Constraints\GreaterThan as SymfonyGreaterThan;
 use Symfony\Component\Validator\Constraints\Length as SymfonyLength;
 use Symfony\Component\Validator\Constraints\NotBlank as SymfonyNotBlank;
 use Vjik\Yii\ValidatorSymfonyRule\SymfonyRule;
+use Vjik\Yii\ValidatorSymfonyRule\SymfonyRuleHandler;
+use Yiisoft\Validator\Exception\UnexpectedRuleException;
+use Yiisoft\Validator\ValidationContext;
 use Yiisoft\Validator\Validator;
 
 final class SymfonyRuleTest extends TestCase
 {
+    public function testDefaults(): void
+    {
+        $rule = new SymfonyRule([]);
+
+        $this->assertSame('symfony-rule', $rule->getName());
+        $this->assertSame([], $rule->getConstraints());
+    }
+
     public function testBase(): void
     {
         $result = (new Validator())->validate(
@@ -116,7 +127,7 @@ final class SymfonyRuleTest extends TestCase
                     private array $numbers = [1, 3, 2, 5];
                 },
                 new SymfonyCollection([
-                    'name' =>  new SymfonyLength(min: 5),
+                    'name' => new SymfonyLength(min: 5),
                     'numbers' => new SymfonyAll(new SymfonyGreaterThan(2))
                 ]),
             ],
@@ -131,5 +142,18 @@ final class SymfonyRuleTest extends TestCase
         $result = (new Validator())->validate($data, new SymfonyRule($constraint));
 
         $this->assertSame($expectedMessages, $result->getErrorMessagesIndexedByPath());
+    }
+
+    public function testInvalidRule(): void
+    {
+        $handler = new SymfonyRuleHandler();
+        $rule = new SymfonyLength(min: 5);
+        $context = new ValidationContext();
+
+        $this->expectException(UnexpectedRuleException::class);
+        $this->expectExceptionMessage(
+            'Expected "Vjik\Yii\ValidatorSymfonyRule\SymfonyRule", but "Symfony\Component\Validator\Constraints\Length" given.'
+        );
+        $handler->validate(7, $rule, $context);
     }
 }
