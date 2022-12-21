@@ -39,6 +39,10 @@ final class SymfonyRuleHandler implements RuleHandlerInterface
      */
     private function prepareValuePath(string $propertyPath): array
     {
+        if ($propertyPath === '') {
+            return [];
+        }
+
         $propertyPath = trim($propertyPath, '[');
         $propertyPath = strtr($propertyPath, [']' => '', '[' => '.']);
         return explode('.', $propertyPath);

@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\NotBlank as SymfonyNotBlank;
 use Vjik\Yii\ValidatorSymfonyRule\SymfonyRule;
 use Vjik\Yii\ValidatorSymfonyRule\SymfonyRuleHandler;
 use Yiisoft\Validator\Exception\UnexpectedRuleException;
+use Yiisoft\Validator\Rule\Nested;
 use Yiisoft\Validator\ValidationContext;
 use Yiisoft\Validator\Validator;
 
@@ -130,12 +131,14 @@ final class SymfonyRuleTest extends TestCase
                         'last-name' => 'Liskov',
                     ],
                 ],
-                new SymfonyCollection([
-                    'name' => new SymfonyCollection([
-                        'first-name' => new SymfonyLength(min: 10),
-                        'last-name' => new SymfonyLength(min: 7),
-                    ]),
-                ]),
+                new SymfonyRule(
+                    new SymfonyCollection([
+                        'name' => new SymfonyCollection([
+                            'first-name' => new SymfonyLength(min: 10),
+                            'last-name' => new SymfonyLength(min: 7),
+                        ]),
+                    ])
+                ),
             ],
             'list' => [
                 [
@@ -150,8 +153,10 @@ final class SymfonyRuleTest extends TestCase
                     'barbara',
                     'x'
                 ],
-                new SymfonyAll(
-                    new SymfonyLength(min: 3),
+                new SymfonyRule(
+                    new SymfonyAll(
+                        new SymfonyLength(min: 3),
+                    )
                 ),
             ],
             'object' => [
@@ -164,9 +169,29 @@ final class SymfonyRuleTest extends TestCase
                     private string $name = 'mike';
                     private array $numbers = [1, 3, 2, 5];
                 },
-                new SymfonyCollection([
-                    'name' => new SymfonyLength(min: 5),
-                    'numbers' => new SymfonyAll(new SymfonyGreaterThan(2))
+                new SymfonyRule(
+                    new SymfonyCollection([
+                        'name' => new SymfonyLength(min: 5),
+                        'numbers' => new SymfonyAll(new SymfonyGreaterThan(2))
+                    ])
+                ),
+            ],
+            'empty-property-path' => [
+                [
+                    'name.first-name' => ['This value is too short. It should have 10 characters or more.'],
+                    'name.last-name' => ['This value is too short. It should have 7 characters or more.'],
+                ],
+                [
+                    'name' => [
+                        'first-name' => 'Barbara',
+                        'last-name' => 'Liskov',
+                    ],
+                ],
+                new Nested([
+                    'name' => [
+                        'first-name' => new SymfonyRule(new SymfonyLength(min: 10)),
+                        'last-name' => new SymfonyRule(new SymfonyLength(min: 7)),
+                    ],
                 ]),
             ],
         ];
@@ -175,9 +200,9 @@ final class SymfonyRuleTest extends TestCase
     /**
      * @dataProvider dataValuePath
      */
-    public function testValuePath(array $expectedMessages, mixed $data, Constraint $constraint): void
+    public function testValuePath(array $expectedMessages, mixed $data, mixed $rules): void
     {
-        $result = (new Validator())->validate($data, new SymfonyRule($constraint));
+        $result = (new Validator())->validate($data, $rules);
 
         $this->assertSame($expectedMessages, $result->getErrorMessagesIndexedByPath());
     }
