@@ -53,22 +53,14 @@ final class PropertyAttribute
 
 ## `SymfonyRule` rule parameters
 
-**$constraint**
+**$constraint** — Single or array of Symfony validation constraints. Required.
 
-Single or array of Symfony validation constraints. Required.
+**$skipOnEmpty** — Whether skip rule on empty value or not, and which value consider as empty. Defaults to `null`.
 
-**$skipOnEmpty**
-
-Whether skip rule on empty value or not, and which value consider as empty. Defaults to `null`.
-
-**$skipOnError**
-
-A boolean value where `true` means to skip rule when the previous one errored and `false` — do not skip.
+**$skipOnError** — A boolean value where `true` means to skip rule when the previous one errored and `false` — do not skip.
 Defaults to `false`.
 
-**$when**
-
-The closure that allow to apply rule under certain conditions only. Defaults to `null`.
+**$when** — The closure that allow to apply rule under certain conditions only. Defaults to `null`.
 
 ## Testing
 
