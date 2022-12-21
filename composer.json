@@ -1,32 +1,39 @@
 {
-    "name": "vjik/_____",
+    "name": "vjik/yii-validator-symfony-rule",
     "type": "library",
-    "description": "_____",
+    "description": "Symfony validation constraints adapter for Yii Validator",
     "keywords": [
-        "_____"
+        "yii",
+        "validator",
+        "validation",
+        "symfony",
+        "constraints"
     ],
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/vjik/_____/issues?state=open",
-        "source": "https://github.com/vjik/_____"
+        "issues": "https://github.com/vjik/yii-validator-symfony-rule/issues?state=open",
+        "source": "https://github.com/vjik/yii-validator-symfony-rule"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "yiisoft/validator": "3.0.x-dev",
+        "symfony/validator": "^6.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "roave/infection-static-analysis-plugin": "^1.25",
-        "vimeo/psalm": "^4.30|^5.1"
+        "vimeo/psalm": "^4.30|^5.4"
     },
     "autoload": {
         "psr-4": {
-            "Vjik\\_____\\": "src"
+            "Vjik\\Yii\\ValidatorSymfonyRule\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Vjik\\_____\\Tests\\": "tests"
+            "Vjik\\Yii\\ValidatorSymfonyRule\\Tests\\": "tests"
         }
     },
     "scripts": {
