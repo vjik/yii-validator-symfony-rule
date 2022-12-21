@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\Yii\ValidatorSymfonyRule\Tests;
+namespace Vjik\Yii\ValidatorSymfonyRule\Tests\Common;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

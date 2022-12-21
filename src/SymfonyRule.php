@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\Yii\ValidatorSymfonyRule;
 
+use Attribute;
 use Closure;
 use InvalidArgumentException;
 use Symfony\Component\Validator\Constraint;
@@ -19,6 +20,7 @@ use Yiisoft\Validator\WhenInterface;
 /**
  * @psalm-import-type WhenType from WhenInterface
  */
+#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
 final class SymfonyRule implements
     RuleWithOptionsInterface,
     SkipOnEmptyInterface,
