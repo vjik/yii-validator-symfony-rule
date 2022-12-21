@@ -19,7 +19,7 @@
 
     <testsuites>
         <testsuite name="Yii Validator Symfony Rule Adapter common tests">
-            <directory>./tests</directory>
+            <directory>./tests/Common</directory>
         </testsuite>
 
         <testsuite name="Yii Validator Scenarios PHP 8.1 tests">
