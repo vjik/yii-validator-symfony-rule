@@ -6,16 +6,18 @@ namespace Vjik\Yii\ValidatorSymfonyRule\Tests\Common;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\All as SymfonyAll;
 use Symfony\Component\Validator\Constraints\Collection as SymfonyCollection;
 use Symfony\Component\Validator\Constraints\GreaterThan as SymfonyGreaterThan;
 use Symfony\Component\Validator\Constraints\Length as SymfonyLength;
 use Symfony\Component\Validator\Constraints\NotBlank as SymfonyNotBlank;
+use Symfony\Component\Validator\Validation as SymfonyValidation;
+use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 use Vjik\Yii\ValidatorSymfonyRule\SymfonyRule;
 use Vjik\Yii\ValidatorSymfonyRule\SymfonyRuleHandler;
 use Yiisoft\Validator\Exception\UnexpectedRuleException;
 use Yiisoft\Validator\Rule\Nested;
+use Yiisoft\Validator\RuleHandlerResolver\SimpleRuleHandlerContainer;
 use Yiisoft\Validator\ValidationContext;
 use Yiisoft\Validator\Validator;
 
@@ -218,5 +220,44 @@ final class SymfonyRuleTest extends TestCase
             'Expected "Vjik\Yii\ValidatorSymfonyRule\SymfonyRule", but "Symfony\Component\Validator\Constraints\Length" given.'
         );
         $handler->validate(7, $rule, $context);
+    }
+
+    public function testCustomSymfonyValidator(): void
+    {
+        $symfonyTranslator = new class() implements SymfonyTranslatorInterface {
+            public function trans(
+                string $id,
+                array $parameters = [],
+                string $domain = null,
+                string $locale = null
+            ): string {
+                return 'hello';
+            }
+
+            public function getLocale(): string
+            {
+                return 'en';
+            }
+        };
+
+        $symfonyValidator = SymfonyValidation::createValidatorBuilder()
+            ->setTranslator($symfonyTranslator)
+            ->getValidator();
+
+        $validator = new Validator(new SimpleRuleHandlerContainer([
+            SymfonyRuleHandler::class => new SymfonyRuleHandler($symfonyValidator),
+        ]));
+
+        $result = $validator->validate(
+            'Yii',
+            new SymfonyRule(new SymfonyLength(['min' => 7]))
+        );
+
+        $this->assertSame(
+            [
+                '' => ['hello'],
+            ],
+            $result->getErrorMessagesIndexedByPath()
+        );
     }
 }

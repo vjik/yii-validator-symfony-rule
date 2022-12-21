@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\Yii\ValidatorSymfonyRule;
 
 use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface as SymfonyValidatorInterface;
 use Yiisoft\Validator\Exception\UnexpectedRuleException;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\RuleHandlerInterface;
@@ -12,6 +13,13 @@ use Yiisoft\Validator\ValidationContext;
 
 final class SymfonyRuleHandler implements RuleHandlerInterface
 {
+    private SymfonyValidatorInterface $symfonyValidator;
+
+    public function __construct(?SymfonyValidatorInterface $symfonyValidator = null)
+    {
+        $this->symfonyValidator = $symfonyValidator ?? Validation::createValidator();
+    }
+
     /**
      * @throws UnexpectedRuleException
      */
@@ -21,7 +29,7 @@ final class SymfonyRuleHandler implements RuleHandlerInterface
             throw new UnexpectedRuleException(SymfonyRule::class, $rule);
         }
 
-        $violations = Validation::createValidator()->validate($value, $rule->getConstraints());
+        $violations = $this->symfonyValidator->validate($value, $rule->getConstraints());
 
         $result = new Result();
         foreach ($violations as $violation) {
