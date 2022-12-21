@@ -7,7 +7,7 @@
         "validator",
         "validation",
         "symfony",
-        "constraint"
+        "constraints"
     ],
     "license": "BSD-3-Clause",
     "support": {
