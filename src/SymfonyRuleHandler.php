@@ -27,10 +27,17 @@ final class SymfonyRuleHandler implements RuleHandlerInterface
         foreach ($violations as $violation) {
             $result->addError(
                 message: $violation->getMessage(),
-                valuePath: [],
+                valuePath: $this->prepareValuePath($violation->getPropertyPath()),
             );
         }
 
         return $result;
+    }
+
+    private function prepareValuePath(string $propertyPath): array
+    {
+        $propertyPath = trim($propertyPath, '[');
+        $propertyPath = strtr($propertyPath, [']' => '', '[' => '.']);
+        return explode('.', $propertyPath);
     }
 }
