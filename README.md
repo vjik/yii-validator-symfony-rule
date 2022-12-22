@@ -2,7 +2,7 @@
     <img src="https://yiisoft.github.io/docs/images/yii_logo.svg" height="100px">
     &nbsp; &nbsp; &nbsp;
     <img src="symfony-logo.svg" height="100px">
-    <h1 align="center">Yii Validator Symfony Rule Adapter</h1>
+    <h1 align="center">Yii Validator Symfony Rule</h1>
     <br>
 </p>
 
@@ -107,5 +107,5 @@ The code is statically analyzed with [Psalm](https://psalm.dev/). To run static 
 
 ## License
 
-The Yii Validator Symfony Rule Adapter is free software. It is released under the terms of the BSD License.
+The Yii Validator Symfony Rule is free software. It is released under the terms of the BSD License.
 Please see [`LICENSE`](./LICENSE.md) for more information.

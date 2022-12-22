@@ -18,11 +18,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Yii Validator Symfony Rule Adapter common tests">
+        <testsuite name="Yii Validator Symfony Rule common tests">
             <directory>./tests/Common</directory>
         </testsuite>
 
-        <testsuite name="Yii Validator Scenarios PHP 8.1 tests">
+        <testsuite name="Yii Validator Symfony Rule PHP 8.1 tests">
             <directory phpVersion="8.1" phpVersionOperator=">=">./tests/Php81</directory>
         </testsuite>
     </testsuites>

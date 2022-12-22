@@ -1,4 +1,4 @@
-# Yii Validator Symfony Rule Adapter Change Log
+# Yii Validator Symfony Rule Change Log
 
 ## 1.0.0 under development
 
