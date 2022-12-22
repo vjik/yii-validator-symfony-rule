@@ -75,7 +75,7 @@ Defaults to `false`.
 
 ## `SymfonyRuleHandler` parameters
 
-`$symfonyValidator` — Symfony validator instance. Defaults to validator created by 
+**$symfonyValidator** — Symfony validator instance. Defaults to validator created by 
 `Symfony\Component\Validator\Validation::createValidator()`.
 
 ## Testing
