@@ -15,6 +15,10 @@ final class SymfonyRuleHandler implements RuleHandlerInterface
 {
     private SymfonyValidatorInterface $symfonyValidator;
 
+    /**
+     * @param SymfonyValidatorInterface|null $symfonyValidator Symfony validator instance. When `null` the default
+     * validator created by {@see Validation::createValidator()} will be used.
+     */
     public function __construct(?SymfonyValidatorInterface $symfonyValidator = null)
     {
         $this->symfonyValidator = $symfonyValidator ?? Validation::createValidator();

@@ -34,20 +34,31 @@ composer require vjik/yii-validator-symfony-rule
 Wrap a symfony constraints to Yii rule `SymfonyRule` enough. For example:
 
 ```php
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\CssColor;
+use Symfony\Component\Validator\Constraints\NotEqualTo;
+use Symfony\Component\Validator\Constraints\Positive;
 use Vjik\Yii\ValidatorSymfonyRule\SymfonyRule;
+use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Required;
 
-final class PropertyAttribute
+final class Car
 {
-    #[SymfonyRule(new NotBlank())]
+    #[Required]
+    #[HasLength(min: 3, skipOnEmpty: true)]
     public string $name = '';
-    
+
+    #[Required]
+    #[SymfonyRule(
+        new CssColor(CssColor::RGB), // Symfony constraint
+        skipOnEmpty: true,
+    )]
+    public string $cssColor = '#1123';
+
     #[SymfonyRule([
-        new NotBlank(),
-        new Email(),
+        new Positive(), // Symfony constraint
+        new NotEqualTo(13), // Symfony constraint
     ])]
-    public string $email = '';
+    public int $number = 13;
 }
 ```
 
@@ -61,6 +72,11 @@ final class PropertyAttribute
 Defaults to `false`.
 
 **$when** — The closure that allow to apply rule under certain conditions only. Defaults to `null`.
+
+## `SymfonyRuleHandler` parameters
+
+`$symfonyValidator` — Symfony validator instance. Defaults to validator created by 
+`Symfony\Component\Validator\Validation::createValidator()`.
 
 ## Testing
 
