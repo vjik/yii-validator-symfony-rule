@@ -47,7 +47,7 @@ final class SymfonyRuleTest extends TestCase
 
         $this->assertSame(
             [
-                'a' => ['This value should be greater than 7.'],
+                '' => ['This collection should contain 7 elements or more.'],
             ],
             $result->getErrorMessagesIndexedByPath(),
         );
