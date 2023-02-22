@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Vjik\Yii\ValidatorSymfonyRule\Tests\Common;
 
+use Countable;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\All as SymfonyAll;
 use Symfony\Component\Validator\Constraints\Collection as SymfonyCollection;
-use Symfony\Component\Validator\Constraints\GreaterThan as SymfonyGreaterThan;
+use Symfony\Component\Validator\Constraints\Count as SymfonyCount;
 use Symfony\Component\Validator\Constraints\Length as SymfonyLength;
 use Symfony\Component\Validator\Constraints\NotBlank as SymfonyNotBlank;
 use Symfony\Component\Validator\Validation as SymfonyValidation;
@@ -163,19 +164,18 @@ final class SymfonyRuleTest extends TestCase
             ],
             'object' => [
                 [
-                    'name' => ['This value is too short. It should have 5 characters or more.'],
-                    'numbers.0' => ['This value should be greater than 2.'],
-                    'numbers.2' => ['This value should be greater than 2.'],
+                    '' => ['This collection should contain 7 elements or more.'],
                 ],
-                new class() {
-                    private string $name = 'mike';
-                    private array $numbers = [1, 3, 2, 5];
+                new class() implements Countable {
+                    private int $count = 3;
+
+                    public function count(): int
+                    {
+                        return $this->count;
+                    }
                 },
                 new SymfonyRule(
-                    new SymfonyCollection([
-                        'name' => new SymfonyLength(min: 5),
-                        'numbers' => new SymfonyAll(new SymfonyGreaterThan(2))
-                    ])
+                    new SymfonyCount(min: 7),
                 ),
             ],
             'empty-property-path' => [
