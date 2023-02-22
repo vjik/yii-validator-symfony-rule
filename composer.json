@@ -14,11 +14,9 @@
         "issues": "https://github.com/vjik/yii-validator-symfony-rule/issues?state=open",
         "source": "https://github.com/vjik/yii-validator-symfony-rule"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "^8.0",
-        "yiisoft/validator": "3.0.x-dev",
+        "yiisoft/validator": "^1.0",
         "symfony/validator": "^6.0"
     },
     "require-dev": {
